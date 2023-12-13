@@ -58,7 +58,6 @@ def ordenar_tarefas(lista_de_tarefas):
 
     for i in range(ativos-1):
         for j in range(i+1, ativos):
-
             if lista_de_tarefas[i].tempo_limite > lista_de_tarefas[j].tempo_limite:
                 temp = lista_de_tarefas[i]
                 lista_de_tarefas[i] = lista_de_tarefas[j]
@@ -91,9 +90,9 @@ def remover_tarefa(lista_de_tarefas):
     for tarefa in lista_de_tarefas:
         print(f"\t\t\t{tarefa.id} - {tarefa.descricao}")
     
-    print(f"\t\t0\t - voltar")
+    print(f"\t\t\t0 - voltar")
 
-    id = input("\t\t\t")
+    id = input("\n\t\t\t")
 
     if id == "0":
         return
@@ -101,12 +100,12 @@ def remover_tarefa(lista_de_tarefas):
     for tarefa in lista_de_tarefas:
         if tarefa.id == int(id):
             lista_de_tarefas.remove(tarefa)
-            print("\t\tTarefa removida com sucesso, pressione ENTER para voltar ao menu.")
-            input()
+            print("\n\t\tTarefa removida com sucesso, pressione ENTER para voltar ao menu.")
+            input("\t\t")
             return
     
-    print("\t\tId inválido! Pressione ENTER para voltar ao menu.")
-    input()  
+    print("\n\t\tId inválido! Pressione ENTER para voltar ao menu.")
+    input("\t\t")  
 
 def alterar_tarefa(lista_de_tarefas):
 
@@ -117,8 +116,14 @@ def alterar_tarefa(lista_de_tarefas):
         print(f"\t\t\tId: {tarefa.id}")
         print(f"\t\t\tDescrição: {tarefa.descricao}")
         print(f"\t\t\tTempo limite: {tarefa.tempo_limite}")
+        print()
+        
+    print(f"\t\t\t0 - Voltar")
 
     id = int(input("\n\t\t\t"))
+
+    if id == 0:
+        return
 
     for tarefa in lista_de_tarefas:
         if tarefa.id == int(id):
@@ -131,14 +136,14 @@ def alterar_tarefa(lista_de_tarefas):
                 tarefa.descricao = descricao
     
             if tempo_limite != "":
-                tarefa.tempo_limite = int(tempo_limite)    
+                tarefa.tempo_limite = int(tempo_limite)
 
             print("\n\t\tDados alterados com sucesso! Pressione ENTER para voltar ao menu.")
             input("\n\t\t")
             return
     
-    print("\n\tId inválido! Pressione ENTER para voltar ao menu.")
-    input()
+    print("\n\t\tId inválido! Pressione ENTER para voltar ao menu.")
+    input("\t\t")  
 
 def concluir_tarefa(lista_de_tarefas):
 
@@ -161,21 +166,24 @@ def concluir_tarefa(lista_de_tarefas):
         if tarefa.id == int(id):
             tarefa.concluida = True
             print("\n\t\tTarefa concluída com sucesso, pressione ENTER para voltar ao menu.")
-            input()
+            input("\t\t")
             return
+        
+    print("\n\t\tId inválido! Pressione ENTER para voltar ao menu.")
+    input("\t\t")  
 
 def reativar_tarefa(lista_de_tarefas):
     
     ordenar_tarefas(lista_de_tarefas)
-    print("\tQual o Id da tarefa que deseja reativar:\n")
+    print("\t\tQual o Id da tarefa que deseja reativar:\n")
 
     for tarefa in lista_de_tarefas:
         if tarefa.concluida:
-            print(f"\t\t{tarefa.id} - {tarefa.descricao}")
+            print(f"\t\t\t{tarefa.id} - {tarefa.descricao}")
     
-    print(f"\t\t0 - voltar")
+    print(f"\t\t\t0 - voltar")
 
-    id = input("\t\t")
+    id = input("\n\t\t\t")
 
     if id == "0":
         return
@@ -183,16 +191,19 @@ def reativar_tarefa(lista_de_tarefas):
     for tarefa in lista_de_tarefas:
         if tarefa.id == int(id):
             tarefa.concluida = False
-            print("\tTarefa reativada com sucesso, pressione ENTER para voltar ao menu.")
-            input()
+            print("\n\t\tTarefa reativada com sucesso, pressione ENTER para voltar ao menu.")
+            input("\t\t")
             return
+    
+    print("\n\t\tId inválido! Pressione ENTER para voltar ao menu.")
+    input("\t\t")  
 
 # Essa função pede ao usuário se ele quer filtrar as tarefas que deseja ver,
 # após é chamado outra função que imprime as tarefas com ou sem filtragem (ativas ou concluídas)
 def visualizar_tarefas(lista_de_tarefas):
 
     ordenar_tarefas(lista_de_tarefas)
-    print("\t\t\tDeseja visualizar todas as tarefas, apenas as ativas ou concluídas?")
+    print("\t\t\tDeseja visualizar todas as tarefas, apenas as ativas ou concluídas?\n")
     print("\t\t\t\tt - Todas")
     print("\t\t\t\ta - Ativas")
     print("\t\t\t\tc - Concluídas")
@@ -318,7 +329,7 @@ def carregar_arquivo(caminho):
 
             tarefa.id = int(linha_div[0])
             tarefa.descricao = linha_div[1]
-            tarefa.tempo_limite = linha_div[2]
+            tarefa.tempo_limite = int(linha_div[2])
             # Aqui é transformado em int primeiramente, após é transformado em booleano e salvo no atributo da variável tarefa
             tarefa.concluida = bool(int(linha_div[3]))
 
@@ -337,10 +348,11 @@ def menu():
         print("\t\t0 - Sair")
         print("\t\t1 - Adicionar tarefa")
         print("\t\t2 - Concluir tarefa")
-        print("\t\t3 - Remover tarefa")
-        print("\t\t4 - Visualizar tarefas")
-        print("\t\t5 - Alterar tarefa")
-        print("\t\t6 - Carregar arquivo")
+        print("\t\t3 - Reativar tarefa")
+        print("\t\t4 - Remover tarefa")
+        print("\t\t5 - Visualizar tarefas")
+        print("\t\t6 - Alterar tarefa")
+        print("\t\t7 - Carregar arquivo")
 
         opcao = input("\n\t\t")
         print()
@@ -353,12 +365,14 @@ def menu():
         elif opcao == "2":
             concluir_tarefa(lista_de_tarefas)
         elif opcao == "3":
-            remover_tarefa(lista_de_tarefas)
+            reativar_tarefa(lista_de_tarefas)
         elif opcao == "4":
-            visualizar_tarefas(lista_de_tarefas)
+            remover_tarefa(lista_de_tarefas)
         elif opcao == "5":
-            alterar_tarefa(lista_de_tarefas)
+            visualizar_tarefas(lista_de_tarefas)
         elif opcao == "6":
+            alterar_tarefa(lista_de_tarefas)
+        elif opcao == "7":
             caminho = input("\t\tDigite o caminho do arquivo: ")
             lista_de_tarefas = carregar_arquivo(caminho)      
         else:
@@ -373,17 +387,6 @@ def menu():
     while not salvar_arquivo(lista_de_tarefas, caminho):
         caminho = input("\n\tPor favor digite o caminho corretamente ou pressione ENTER para fechar o programa sem salvar as tarefas: ")
 
-    input()
-
-    #salvar_arquivo(lista_de_tarefas, caminho)
+    input("\tPressione ENTER para fechar.")
 
 menu()
-
-'''
-Lista de afazeres para melhorar o trabalho:
-adicionar função pra ver tarefas que são concluidas ou não 
-1- adicionar comentários nas funções e partes que podem ser confusas;
-2- testar mais
-3- ver com o professor sobre salvar a lista no computar (manipulação de arquivos) e também sobre usar datas (dates)
-4- revisar os tópicos de avaliação
-'''
